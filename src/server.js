@@ -33,8 +33,8 @@ let server;
 // Creating object of key and certificate
 // for SSL
 const options = {
-  key: fs.readFileSync("/var/www/html/server.key"),
-  cert: fs.readFileSync("/var/www/htmlserver.cert"),
+  // key: fs.readFileSync("/var/www/html/server.key"),
+  // cert: fs.readFileSync("/var/www/htmlserver.cert"),
 };
 
 mongoose.connect(config.mongoose.url).then(() => {

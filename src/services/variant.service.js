@@ -43,7 +43,7 @@ const uploadImage = (file) => {
 const createVariant = async (variantData, file) => {
 
 
-    const productId = variantData.productId;
+  const productId = variantData.productId;
    const payload = {};  
    payload.sku = variantData.sku;
    payload.price = variantData.price;
@@ -64,7 +64,6 @@ const createVariant = async (variantData, file) => {
   payload.image = file.filename;
 
 
-  console.log(payload)   ;
   const variant = await Variant.create(payload);
 
   // Find the Product and update its variant field
