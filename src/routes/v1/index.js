@@ -8,6 +8,7 @@ const companyRoute = require('./company.route');
 
 const vehicleRoute = require('./vehicle.route');
 const driverRoute = require('./driver.route');
+const customersRoute = require("./customersroute")
 const rejectJobRoute = require('./rejected-job-log.route');
 const dispatcherRoute = require('./dispatcher.route');
 const callRoute = require('./call.route');
@@ -33,6 +34,9 @@ const brandRoute = require('./brand.route');
 
 const filesend = require('./filesend.route');
 const config = require('../../config/config');
+const contactUs = require('./contactUs.route');
+
+const productcategoryRoute = require('./productcategory.route');
 
 const router = express.Router();
 
@@ -64,6 +68,10 @@ const defaultRoutes = [
     route: callRoute,
   },
   {
+    path: '/contact-us',
+    route: contactUs,
+  },
+  {
     path: '/user',
     route: userRoute,
   },
@@ -84,7 +92,10 @@ const defaultRoutes = [
     path: '/driver',
     route: driverRoute,
   },
- 
+  {
+    path: '/customer',
+    route:customersRoute,
+  },
   {
     path: '/dispatcher',
     route: dispatcherRoute,
@@ -92,6 +103,10 @@ const defaultRoutes = [
   {
     path: '/product',
     route: productRoute,
+  },
+  {
+    path: '/productcategory',
+    route: productcategoryRoute,
   },
   {
     path: '/order',

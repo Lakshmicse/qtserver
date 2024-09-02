@@ -50,4 +50,6 @@ module.exports.Variant = require('./variant.model')
 module.exports.Attribute  = require('./attribute.model')
 
 
-module.exports.Customization  = require('./customization.model')
+module.exports.Customization  = require('./customization.model');
+
+
