@@ -5,7 +5,7 @@ const { toJSON, paginate } = require('./plugins');
 const productSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true },
   inStock: { type: Boolean, required: true },
-  category: { type: mongoose.Schema.Types.ObjectId, ref: 'ProductCategory', required: true,autopopulate: true },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true,autopopulate: true },
   title: { type: String, required: true },
   description: { type: String },
   mrp: { type: Number, required: true },

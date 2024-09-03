@@ -36,7 +36,6 @@ const filesend = require('./filesend.route');
 const config = require('../../config/config');
 const contactUs = require('./contactUs.route');
 
-const productcategoryRoute = require('./productcategory.route');
 
 const router = express.Router();
 
@@ -104,10 +103,7 @@ const defaultRoutes = [
     path: '/product',
     route: productRoute,
   },
-  {
-    path: '/productcategory',
-    route: productcategoryRoute,
-  },
+ 
   {
     path: '/order',
     route: orderRoute,

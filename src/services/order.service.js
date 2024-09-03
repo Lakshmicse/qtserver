@@ -29,6 +29,8 @@ const queryOrders = async (filter, options) => {
 const createOrder = async (orderData) => {
   const { customerId, items, shippingAddress, paymentMethod, ...rest } = orderData;
 
+  
+
   // Create Order
   const orderPayload = {
     customerId,
@@ -152,7 +154,7 @@ const placeOrder = async (req) => {
       quantity: item.quantity,
       unitPrice: item.price,
       totalPrice: item.price * item.quantity,
-      customizationId : item.customizationId
+      customizationId : item.customizationId ? item.customizationId : null
     });
 
     totalAmount += orderItem.totalPrice;

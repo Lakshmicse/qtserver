@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 // productService.js
-const { Product, Image, ProductSpec, ProductCategory, ProductColor } = require('../models');
+const { Product, Image, ProductSpec, Category, ProductColor } = require('../models');
 
 /**
  * Query for Company
@@ -18,37 +18,46 @@ const queryProducts = async (filter, options) => {
   return product;
 };
 // Create a new product
-const createProduct = async (productData,imagesArray = []) => {
+const createProduct = async (productData, imagesArray = []) => {
+  try {
+    // Parse product details from the incoming data
+    const productDetail = JSON.parse(productData.product);
+
+    // Insert new images and retrieve their IDs
+    const newImages = await Image.insertMany(
+      imagesArray.map((img) => ({ src: img.filename }))
+    );
 
 
-  const  productDetail  = JSON.parse(productData.product);
+    // // Find the product category by its ID
+    const productCategory = await Category.findById(productDetail.category);
 
-  const newImages = await Image.insertMany(imagesArray.map(img => ({ src: img.filename })));
- 
 
-  const productCategory = await ProductCategory.findOne({name : "Truck Tyres"});
 
-  
-  const productPayload = {
-    ...productDetail,
-    category: productCategory._id,
-   createdAt: new Date().toISOString(),
-   images : newImages.map(img => (img._id)),
-   brand: new mongoose.Types.ObjectId(productDetail.brand)
+    if (!productCategory) {
+      throw new Error('Category not found');
+    }
+
+    // Prepare the payload for creating the product
+    const productPayload = {
+      ...productDetail,
+      category: productCategory._id,
+      createdAt: new Date().toISOString(),
+      images: newImages.map((img) => img._id),
+      brand: new mongoose.Types.ObjectId(productDetail.brand),
+    };
+
+    // Create and save the new product
+    const product = new Product(productPayload);
+    const result = await product.save();
+
+    return result;
+  } catch (e) {
+    console.error('Error creating product:', e);
+    throw e;
   }
-
-  const product = new Product(productPayload);
-
-  try{
-
-   const result =  await product.save();
-  
-   return result;
-  }catch(e){
-    console.log(e);
-  }
-  
 };
+
 
 // Get a product by ID
 const getProductById = async (productId) => {
@@ -66,7 +75,7 @@ const updateProductById = async (productId, updateData) => {
     ...rest,
     image: newImages.map(img => img._id),
     productSpec: newSpecs.map(spec => spec._id),
-    category: await ProductCategory.findById(category),
+    category: await Category.findById(category),
     color: await ProductColor.findById(color)
   }, { new: true });
 

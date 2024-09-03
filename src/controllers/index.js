@@ -20,7 +20,5 @@ module.exports.brandController = require('./brand.controller');
 
 module.exports.categoryController = require('./category.controller');
 
-module.exports.productcategoryController = require('./productcategory.controller');
-
 module.exports.contactUsController = require('./contactus.controller');
 
